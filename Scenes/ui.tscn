@@ -1,0 +1,101 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8208rhcnhse7"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/ui.gd" id="1_1oqtc"]
+[ext_resource type="FontFile" uid="uid://7wee7g8eop8f" path="res://Assets/Fonts/VarelaRound-Regular.ttf" id="1_hv7yp"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_1oqtc")
+
+[node name="Message" type="Label" parent="."]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 64.0
+offset_top = -412.0
+offset_right = -64.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 52
+text = "MENU SCREEN"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Button1" type="Button" parent="."]
+visible = false
+offset_left = 64.0
+offset_top = 600.0
+offset_right = 1856.0
+offset_bottom = 680.0
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 32
+text = "CHOICE 1"
+
+[node name="Button2" type="Button" parent="."]
+visible = false
+offset_left = 64.0
+offset_top = 720.0
+offset_right = 1856.0
+offset_bottom = 800.0
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 32
+text = "CHOICE 2"
+
+[node name="Button3" type="Button" parent="."]
+visible = false
+offset_left = 64.0
+offset_top = 840.0
+offset_right = 1856.0
+offset_bottom = 920.0
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 32
+text = "CHOICE 3"
+
+[node name="Button4" type="Button" parent="."]
+visible = false
+offset_left = 64.0
+offset_top = 960.0
+offset_right = 1856.0
+offset_bottom = 1040.0
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 32
+text = "CHOICE 4"
+
+[node name="StartButton" type="Button" parent="."]
+offset_left = 768.0
+offset_top = 664.0
+offset_right = 1152.0
+offset_bottom = 792.0
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 54
+text = "START"
+
+[node name="QuitButton" type="Button" parent="."]
+offset_left = 768.0
+offset_top = 872.0
+offset_right = 1152.0
+offset_bottom = 1000.0
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 54
+text = "QUIT"
+
+[node name="MenuButton" type="Button" parent="."]
+visible = false
+offset_left = 1592.0
+offset_top = 24.0
+offset_right = 1856.0
+offset_bottom = 104.0
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 54
+text = "QUIT"
+
+[connection signal="pressed" from="Button1" to="." method="Button1Pressed"]
+[connection signal="pressed" from="Button2" to="." method="Button2Pressed"]
+[connection signal="pressed" from="Button3" to="." method="Button3Pressed"]
+[connection signal="pressed" from="Button4" to="." method="Button4Pressed"]
+[connection signal="pressed" from="StartButton" to="." method="StartButtonPressed"]
+[connection signal="pressed" from="QuitButton" to="." method="QuitButtonPressed"]
+[connection signal="pressed" from="MenuButton" to="." method="MenuButtonPressed"]

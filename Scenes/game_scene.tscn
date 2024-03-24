@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://qud8chm7nnfi"]
+
+[ext_resource type="Script" path="res://Assets/Scripts/game_scene.gd" id="1_tg35j"]
+[ext_resource type="PackedScene" uid="uid://b8208rhcnhse7" path="res://Scenes/ui.tscn" id="1_vadmo"]
+
+[node name="GameScene" type="Node2D"]
+script = ExtResource("1_tg35j")
+
+[node name="UI" parent="." instance=ExtResource("1_vadmo")]
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0.172549, 0.541176, 0.431373, 1)
+
+[connection signal="choice1" from="UI" to="." method="Choice1Selected"]
+[connection signal="choice2" from="UI" to="." method="Choice2Selected"]
+[connection signal="choice3" from="UI" to="." method="Choice3Selected"]
+[connection signal="choice4" from="UI" to="." method="Choice4Selected"]
+[connection signal="quitGame" from="UI" to="." method="QuitGame"]
+[connection signal="returnToMenu" from="UI" to="." method="ReturnToMenu"]
+[connection signal="startGame" from="UI" to="." method="StartGame"]
