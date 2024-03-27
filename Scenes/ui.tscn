@@ -1,10 +1,30 @@
-[gd_scene load_steps=3 format=3 uid="uid://b8208rhcnhse7"]
+[gd_scene load_steps=9 format=3 uid="uid://b8208rhcnhse7"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/ui.gd" id="1_1oqtc"]
 [ext_resource type="FontFile" uid="uid://7wee7g8eop8f" path="res://Assets/Fonts/VarelaRound-Regular.ttf" id="1_hv7yp"]
+[ext_resource type="Texture2D" uid="uid://dsax264svr5tp" path="res://Assets/Images/Backdrop.png" id="2_myrop"]
+[ext_resource type="Texture2D" uid="uid://d0cy1lpbovc03" path="res://Assets/Images/A.png" id="4_gymht"]
+[ext_resource type="Texture2D" uid="uid://cfvdbtpod7klk" path="res://Assets/Images/B.png" id="5_dkh5h"]
+[ext_resource type="Texture2D" uid="uid://cx0u880lm3qwb" path="res://Assets/Images/C.png" id="6_qt0bi"]
+[ext_resource type="Texture2D" uid="uid://d4ffe18ypvqo5" path="res://Assets/Images/D.png" id="7_240mp"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0hq7j"]
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_1oqtc")
+
+[node name="DreamBackdrop" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("CanvasItemMaterial_0hq7j")
+position = Vector2(960, 544)
+rotation = 3.14159
+texture = ExtResource("2_myrop")
+
+[node name="TeaBackdrop" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("CanvasItemMaterial_0hq7j")
+position = Vector2(960, 544)
+texture = ExtResource("2_myrop")
 
 [node name="Message" type="Label" parent="."]
 anchors_preset = 14
@@ -21,48 +41,113 @@ theme_override_fonts/font = ExtResource("1_hv7yp")
 theme_override_font_sizes/font_size = 52
 text = "MENU SCREEN"
 horizontal_alignment = 1
-vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="Button1" type="Button" parent="."]
+[node name="ButtonA" type="Button" parent="."]
 visible = false
-offset_left = 64.0
-offset_top = 600.0
-offset_right = 1856.0
-offset_bottom = 680.0
+offset_left = 272.0
+offset_top = 320.0
+offset_right = 2064.0
+offset_bottom = 1828.0
+scale = Vector2(0.142923, 0.169375)
 theme_override_fonts/font = ExtResource("1_hv7yp")
 theme_override_font_sizes/font_size = 32
-text = "CHOICE 1"
+icon = ExtResource("4_gymht")
+icon_alignment = 1
 
-[node name="Button2" type="Button" parent="."]
+[node name="ButtonB" type="Button" parent="."]
 visible = false
-offset_left = 64.0
-offset_top = 720.0
-offset_right = 1856.0
-offset_bottom = 800.0
+offset_left = 1496.0
+offset_top = 520.0
+offset_right = 3288.0
+offset_bottom = 2028.0
+scale = Vector2(0.143005, 0.169952)
 theme_override_fonts/font = ExtResource("1_hv7yp")
 theme_override_font_sizes/font_size = 32
-text = "CHOICE 2"
+icon = ExtResource("5_dkh5h")
+icon_alignment = 1
 
-[node name="Button3" type="Button" parent="."]
+[node name="ButtonC" type="Button" parent="."]
 visible = false
-offset_left = 64.0
-offset_top = 840.0
-offset_right = 1856.0
-offset_bottom = 920.0
+offset_left = 1072.0
+offset_top = 624.0
+offset_right = 2864.0
+offset_bottom = 2132.0
+scale = Vector2(0.142641, 0.168818)
 theme_override_fonts/font = ExtResource("1_hv7yp")
 theme_override_font_sizes/font_size = 32
-text = "CHOICE 3"
+icon = ExtResource("6_qt0bi")
+icon_alignment = 1
 
-[node name="Button4" type="Button" parent="."]
+[node name="ButtonD" type="Button" parent="."]
 visible = false
-offset_left = 64.0
-offset_top = 960.0
-offset_right = 1856.0
-offset_bottom = 1040.0
+offset_left = 632.0
+offset_top = 328.0
+offset_right = 2424.0
+offset_bottom = 1836.0
+scale = Vector2(0.142392, 0.168742)
 theme_override_fonts/font = ExtResource("1_hv7yp")
 theme_override_font_sizes/font_size = 32
-text = "CHOICE 4"
+icon = ExtResource("7_240mp")
+icon_alignment = 1
+
+[node name="ButtonAd" type="Button" parent="."]
+visible = false
+offset_left = 256.0
+offset_top = 576.0
+offset_right = 2048.0
+offset_bottom = 2084.0
+scale = Vector2(0.142923, 0.169375)
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 32
+icon = ExtResource("4_gymht")
+icon_alignment = 1
+
+[node name="ButtonBd" type="Button" parent="."]
+visible = false
+offset_left = 640.0
+offset_top = 768.0
+offset_right = 2432.0
+offset_bottom = 2276.0
+scale = Vector2(0.143005, 0.169952)
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 32
+icon = ExtResource("5_dkh5h")
+icon_alignment = 1
+
+[node name="ButtonCd" type="Button" parent="."]
+visible = false
+offset_left = 1024.0
+offset_top = 768.0
+offset_right = 2816.0
+offset_bottom = 2276.0
+scale = Vector2(0.142641, 0.168818)
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 32
+icon = ExtResource("6_qt0bi")
+icon_alignment = 1
+
+[node name="ButtonDd" type="Button" parent="."]
+visible = false
+offset_left = 1408.0
+offset_top = 576.0
+offset_right = 3200.0
+offset_bottom = 2084.0
+scale = Vector2(0.142392, 0.168742)
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 32
+icon = ExtResource("7_240mp")
+icon_alignment = 1
+
+[node name="ExitButton" type="Button" parent="."]
+visible = false
+offset_left = 1592.0
+offset_top = 24.0
+offset_right = 1856.0
+offset_bottom = 104.0
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 54
+text = "EXIT"
 
 [node name="StartButton" type="Button" parent="."]
 offset_left = 768.0
@@ -73,6 +158,16 @@ theme_override_fonts/font = ExtResource("1_hv7yp")
 theme_override_font_sizes/font_size = 54
 text = "START"
 
+[node name="ContinueButton" type="Button" parent="."]
+visible = false
+offset_left = 768.0
+offset_top = 760.0
+offset_right = 1152.0
+offset_bottom = 888.0
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 54
+text = "CONTINUE"
+
 [node name="QuitButton" type="Button" parent="."]
 offset_left = 768.0
 offset_top = 872.0
@@ -82,20 +177,15 @@ theme_override_fonts/font = ExtResource("1_hv7yp")
 theme_override_font_sizes/font_size = 54
 text = "QUIT"
 
-[node name="MenuButton" type="Button" parent="."]
-visible = false
-offset_left = 1592.0
-offset_top = 24.0
-offset_right = 1856.0
-offset_bottom = 104.0
-theme_override_fonts/font = ExtResource("1_hv7yp")
-theme_override_font_sizes/font_size = 54
-text = "QUIT"
-
-[connection signal="pressed" from="Button1" to="." method="Button1Pressed"]
-[connection signal="pressed" from="Button2" to="." method="Button2Pressed"]
-[connection signal="pressed" from="Button3" to="." method="Button3Pressed"]
-[connection signal="pressed" from="Button4" to="." method="Button4Pressed"]
+[connection signal="pressed" from="ButtonA" to="." method="ButtonAPressed"]
+[connection signal="pressed" from="ButtonB" to="." method="ButtonBPressed"]
+[connection signal="pressed" from="ButtonC" to="." method="ButtonCPressed"]
+[connection signal="pressed" from="ButtonD" to="." method="ButtonDPressed"]
+[connection signal="pressed" from="ButtonAd" to="." method="ButtonAdPressed"]
+[connection signal="pressed" from="ButtonBd" to="." method="ButtonBdPressed"]
+[connection signal="pressed" from="ButtonCd" to="." method="ButtonCdPressed"]
+[connection signal="pressed" from="ButtonDd" to="." method="ButtonDdPressed"]
+[connection signal="pressed" from="ExitButton" to="." method="ExitButtonPressed"]
 [connection signal="pressed" from="StartButton" to="." method="StartButtonPressed"]
+[connection signal="pressed" from="ContinueButton" to="." method="ContinueButtonPressed"]
 [connection signal="pressed" from="QuitButton" to="." method="QuitButtonPressed"]
-[connection signal="pressed" from="MenuButton" to="." method="MenuButtonPressed"]

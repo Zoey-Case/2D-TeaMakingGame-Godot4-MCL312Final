@@ -13,10 +13,15 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 color = Color(0.172549, 0.541176, 0.431373, 1)
 
-[connection signal="choice1" from="UI" to="." method="Choice1Selected"]
-[connection signal="choice2" from="UI" to="." method="Choice2Selected"]
-[connection signal="choice3" from="UI" to="." method="Choice3Selected"]
-[connection signal="choice4" from="UI" to="." method="Choice4Selected"]
+[connection signal="choiceA" from="UI" to="." method="ChoiceASelected"]
+[connection signal="choiceAd" from="UI" to="." method="ChoiceAdSelected"]
+[connection signal="choiceB" from="UI" to="." method="ChoiceBSelected"]
+[connection signal="choiceBd" from="UI" to="." method="ChoiceBdSelected"]
+[connection signal="choiceC" from="UI" to="." method="ChoiceCSelected"]
+[connection signal="choiceCd" from="UI" to="." method="ChoiceCdSelected"]
+[connection signal="choiceD" from="UI" to="." method="ChoiceDSelected"]
+[connection signal="choiceDd" from="UI" to="." method="ChoiceDdSelected"]
+[connection signal="proceed" from="UI" to="." method="ContinueButtonPressed"]
 [connection signal="quitGame" from="UI" to="." method="QuitGame"]
 [connection signal="returnToMenu" from="UI" to="." method="ReturnToMenu"]
 [connection signal="startGame" from="UI" to="." method="StartGame"]
