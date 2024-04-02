@@ -1,20 +1,12 @@
 extends Node2D
 
-var startText = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-var menuText = "MENU SCREEN"
-var correctText = "CORRECT CHOICE"
-var incorrectText = "INCORRECT CHOICE"
-var endText = "END REACHED"
-
-var endScene1Text = "NEVER PASSED SCENE 1"
-var endScene2Text = "NEVER PASSED SCENE 2"
-var endScene3Text = "NEVER PASSED SCENE 3"
-var endScene4Text = "NEVER PASSED SCENE 4"
-var end0Text = "REACHED END, BUT FOUND 0 CLUES"
-var end1Text = "REACHED END, BUT ONLY FOUND 1 CLUE"
-var end2Text = "REACHED END, BUT ONLY FOUND 2 CLUES"
-var end3Text = "REACHED END, BUT ONLY FOUND 3 CLUES"
-var end4Text = "REACHED END, AND FOUND ALL 4 CLUES"
+@export var standardText = ["START TEXT", "MENU TEXT", "CORRECT CHOICE", "INCORRECT CHOICE"]
+@export var endText = ["NEVER PASSED SCENE 1", "NEVER PASSED SCENE 2", "NEVER PASSED SCENE 3",
+					"NEVER PASSED SCENE 4", "REACHED END, BUT FOUND 0 CLUES",
+					"REACHED END, BUT ONLY FOUND 1 CLUE", "REACHED END, BUT ONLY FOUND 2 CLUES",
+					"REACHED END, BUT ONLY FOUND 3 CLUES", "REACHED END, AND FOUND ALL 4 CLUES"]
+@export var dreamText = []
+@export var teaText = []
 
 var sceneNum = 0
 var choiceNum = 0
@@ -28,7 +20,7 @@ var inDream = false
 func StartGame():
 	$UI.HideMainMenu()
 	$UI.ShowTeaScene()
-	$UI.ShowMessage(startText)
+	$UI.ShowMessage(standardText[0])
 	sceneNum += 1
 
 func ResetGame():
@@ -42,10 +34,11 @@ func ResetGame():
 	inDream = false
 
 func ReturnToMenu():
+	ResetGame()
 	$UI.HideDreamScene()
 	$UI.HideTeaScene()
 	$UI.ShowMainMenu()
-	$UI.ShowMessage(menuText)
+	$UI.ShowMessage(standardText[1])
 
 func QuitGame():
 	print("Game Exited")
@@ -110,7 +103,7 @@ func ProcessTurn():
 	print("Tea Correct: ", teaCorrect)
 	
 	if(correct):
-		$UI.ShowMessage(correctText)
+		$UI.ShowMessage(standardText[2])
 		if(choiceNum > 1):
 			if(teaCorrect == 2):
 				goToDream = true
@@ -120,7 +113,7 @@ func ProcessTurn():
 			choiceNum = 0
 			ContinueGame()
 	else:
-		$UI.ShowMessage(incorrectText)
+		$UI.ShowMessage(standardText[3])
 		if(choiceNum > 1):
 			choiceNum = 0
 			ContinueGame()
@@ -174,9 +167,9 @@ func ChoiceAdSelected():
 	
 	if(sceneNum == 1):
 		dreamCorrect += 1
-		$UI.ShowMessage(correctText)
+		$UI.ShowMessage(standardText[2])
 	else:
-		$UI.ShowMessage(incorrectText)
+		$UI.ShowMessage(standardText[3])
 	
 	print("Correct Dream Answers: ", dreamCorrect)
 	ContinueGame()
@@ -186,9 +179,9 @@ func ChoiceBdSelected():
 	
 	if(sceneNum == 4):
 		dreamCorrect += 1
-		$UI.ShowMessage(correctText)
+		$UI.ShowMessage(standardText[2])
 	else:
-		$UI.ShowMessage(incorrectText)
+		$UI.ShowMessage(standardText[3])
 	
 	print("Correct Dream Answers: ", dreamCorrect)
 	ContinueGame()
@@ -198,9 +191,9 @@ func ChoiceCdSelected():
 	
 	if(sceneNum == 3):
 		dreamCorrect += 1
-		$UI.ShowMessage(correctText)
+		$UI.ShowMessage(standardText[2])
 	else:
-		$UI.ShowMessage(incorrectText)
+		$UI.ShowMessage(standardText[3])
 	
 	print("Correct Dream Answers: ", dreamCorrect)
 	ContinueGame()
@@ -211,9 +204,9 @@ func ChoiceDdSelected():
 	
 	if(sceneNum == 2):
 		dreamCorrect += 1
-		$UI.ShowMessage(correctText)
+		$UI.ShowMessage(standardText[2])
 	else:
-		$UI.ShowMessage(incorrectText)
+		$UI.ShowMessage(standardText[3])
 	
 	print("Correct Dream Answers: ", dreamCorrect)
 	ContinueGame()
@@ -223,21 +216,21 @@ func GoToEnd():
 	
 	match sceneNum:
 		1:
-			$UI.ShowMessage(endScene1Text)
+			$UI.ShowMessage(endText[0])
 		2:
-			$UI.ShowMessage(endScene2Text)
+			$UI.ShowMessage(endText[1])
 		3:
-			$UI.ShowMessage(endScene3Text)
+			$UI.ShowMessage(endText[2])
 		4:
-			$UI.ShowMessage(endScene4Text)
+			$UI.ShowMessage(endText[3])
 		5:
 			if(dreamCorrect == 4):
-				$UI.ShowMessage(end4Text)
+				$UI.ShowMessage(endText[8])
 			elif(dreamCorrect == 3):
-				$UI.ShowMessage(end3Text)
+				$UI.ShowMessage(endText[7])
 			elif(dreamCorrect == 2):
-				$UI.ShowMessage(end2Text)
+				$UI.ShowMessage(endText[6])
 			elif(dreamCorrect == 1):
-				$UI.ShowMessage(end1Text)
+				$UI.ShowMessage(endText[5])
 			else:
-				$UI.ShowMessage(end0Text)
+				$UI.ShowMessage(endText[4])

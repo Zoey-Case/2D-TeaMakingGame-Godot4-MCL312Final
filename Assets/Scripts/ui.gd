@@ -60,6 +60,7 @@ func HideContinueScene():
 	$ContinueButton.hide()
 	
 func HideDreamScene():
+	$TeaBackdrop.hide()
 	$ButtonAd.hide()
 	$ButtonBd.hide()
 	$ButtonCd.hide()
@@ -81,6 +82,7 @@ func ShowContinueScene():
 	$ContinueButton.show()
 	
 func ShowDreamScene():
+	$TeaBackdrop.show()
 	$ButtonAd.show()
 	$ButtonBd.show()
 	$ButtonCd.show()

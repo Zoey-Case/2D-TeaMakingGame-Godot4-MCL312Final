@@ -1,5 +1,5 @@
 # MCL 312 - Final Project
-Authors: @Ricky-Case and Elena Andrews
+Authors: Ricky Case and Elena Andrews
 
 ## Project Outline
 
