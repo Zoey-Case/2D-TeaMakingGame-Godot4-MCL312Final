@@ -1,97 +1,339 @@
-[gd_scene load_steps=9 format=3 uid="uid://b8208rhcnhse7"]
+[gd_scene load_steps=12 format=3 uid="uid://b8208rhcnhse7"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/ui.gd" id="1_1oqtc"]
 [ext_resource type="FontFile" uid="uid://7wee7g8eop8f" path="res://Assets/Fonts/VarelaRound-Regular.ttf" id="1_hv7yp"]
-[ext_resource type="Texture2D" uid="uid://dsax264svr5tp" path="res://Assets/Images/Backdrop.png" id="2_myrop"]
-[ext_resource type="Texture2D" uid="uid://d0cy1lpbovc03" path="res://Assets/Images/A.png" id="4_gymht"]
-[ext_resource type="Texture2D" uid="uid://cfvdbtpod7klk" path="res://Assets/Images/B.png" id="5_dkh5h"]
-[ext_resource type="Texture2D" uid="uid://cx0u880lm3qwb" path="res://Assets/Images/C.png" id="6_qt0bi"]
-[ext_resource type="Texture2D" uid="uid://d4ffe18ypvqo5" path="res://Assets/Images/D.png" id="7_240mp"]
+[ext_resource type="Texture2D" uid="uid://d3dfft2m8w88w" path="res://Assets/Backgrounds/StarySky.png" id="2_766j6"]
+[ext_resource type="Texture2D" uid="uid://ccbk2qr14dn6n" path="res://Assets/Backgrounds/Backdrop.PNG" id="3_l8uri"]
+[ext_resource type="Script" path="res://Assets/Scripts/MessageController.gd" id="4_vtsro"]
+[ext_resource type="Texture2D" uid="uid://coxx58a6vgo3m" path="res://Assets/Icons/Lavender.png" id="6_8hs7v"]
+[ext_resource type="Texture2D" uid="uid://dj203dduwsh1e" path="res://Assets/Icons/Milk.png" id="7_50wdl"]
+[ext_resource type="Texture2D" uid="uid://hg18c0qg1xle" path="res://Assets/Icons/Mint.png" id="8_r0sk7"]
+[ext_resource type="Texture2D" uid="uid://bnqgksdc512n6" path="res://Assets/Icons/Sugar.png" id="9_jctg8"]
+[ext_resource type="Texture2D" uid="uid://d1i8aguulvik1" path="res://Assets/Icons/Datura.png" id="10_ygbek"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_0hq7j"]
 
 [node name="UI" type="CanvasLayer"]
+visible = false
 script = ExtResource("1_1oqtc")
 
-[node name="DreamBackdrop" type="Sprite2D" parent="."]
+[node name="DreamScene" type="Node" parent="."]
+
+[node name="DreamBackdrop" type="Sprite2D" parent="DreamScene"]
 visible = false
 material = SubResource("CanvasItemMaterial_0hq7j")
 position = Vector2(960, 544)
 rotation = 3.14159
-texture = ExtResource("2_myrop")
+texture = ExtResource("2_766j6")
 
-[node name="TeaBackdrop" type="Sprite2D" parent="."]
+[node name="DreamMessage" type="RichTextLabel" parent="DreamScene"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -895.0
+offset_top = -361.0
+offset_right = 896.0
+offset_bottom = 512.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/normal_font = ExtResource("1_hv7yp")
+theme_override_font_sizes/normal_font_size = 56
+bbcode_enabled = true
+text = "[center]DREAM MESSAGE[/center]"
+script = ExtResource("4_vtsro")
+
+[node name="ContinueButton" type="Button" parent="DreamScene"]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -192.0
+offset_top = -124.0
+offset_right = 192.0
+offset_bottom = -36.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 54
+text = "CONTINUE"
+
+[node name="ContinueTimer" type="Timer" parent="DreamScene"]
+wait_time = 10.0
+one_shot = true
+
+[node name="TeaScene" type="Node" parent="."]
+
+[node name="TeaBackdrop" type="Sprite2D" parent="TeaScene"]
 visible = false
 material = SubResource("CanvasItemMaterial_0hq7j")
 position = Vector2(960, 544)
-texture = ExtResource("2_myrop")
+texture = ExtResource("3_l8uri")
 
-[node name="Message" type="Label" parent="."]
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = 64.0
-offset_top = -412.0
-offset_right = -64.0
-offset_bottom = 36.0
+[node name="TeaMessage" type="RichTextLabel" parent="TeaScene"]
+visible = false
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -915.0
+offset_top = -372.0
+offset_right = 916.0
+offset_bottom = -80.0
 grow_horizontal = 2
-grow_vertical = 2
-theme_override_fonts/font = ExtResource("1_hv7yp")
-theme_override_font_sizes/font_size = 52
-text = "MENU SCREEN"
-horizontal_alignment = 1
-autowrap_mode = 3
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/normal_font = ExtResource("1_hv7yp")
+theme_override_font_sizes/normal_font_size = 56
+bbcode_enabled = true
+text = "TEA MESSAGE"
+scroll_following = true
+autowrap_mode = 2
+script = ExtResource("4_vtsro")
 
-[node name="ButtonA" type="Button" parent="."]
+[node name="AlertTimer" type="Timer" parent="TeaScene"]
+wait_time = 5.0
+one_shot = true
+
+[node name="BrewButton" type="Button" parent="TeaScene"]
 visible = false
-offset_left = 272.0
-offset_top = 320.0
-offset_right = 2064.0
-offset_bottom = 1828.0
-scale = Vector2(0.142923, 0.169375)
+offset_left = 17.0
+offset_top = 127.0
+offset_right = 401.0
+offset_bottom = 255.0
 theme_override_fonts/font = ExtResource("1_hv7yp")
-theme_override_font_sizes/font_size = 32
-icon = ExtResource("4_gymht")
-icon_alignment = 1
+theme_override_font_sizes/font_size = 54
+text = "BREW TEA"
 
-[node name="ButtonB" type="Button" parent="."]
+[node name="BrewButtonTimer" type="Timer" parent="TeaScene"]
+wait_time = 3.0
+one_shot = true
+
+[node name="IngredientButtons" type="Node" parent="TeaScene"]
+
+[node name="Activation01" type="Button" parent="TeaScene/IngredientButtons"]
 visible = false
-offset_left = 1496.0
-offset_top = 520.0
-offset_right = 3288.0
-offset_bottom = 2028.0
-scale = Vector2(0.143005, 0.169952)
+offset_left = 741.0
+offset_top = 421.0
+offset_right = 2981.0
+offset_bottom = 2641.0
+scale = Vector2(0.05, 0.05)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
 theme_override_fonts/font = ExtResource("1_hv7yp")
-theme_override_font_sizes/font_size = 32
-icon = ExtResource("5_dkh5h")
+theme_override_font_sizes/font_size = 128
+icon = ExtResource("6_8hs7v")
+flat = true
 icon_alignment = 1
+expand_icon = true
 
-[node name="ButtonC" type="Button" parent="."]
+[node name="Activation02" type="Button" parent="TeaScene/IngredientButtons"]
 visible = false
-offset_left = 1072.0
-offset_top = 624.0
-offset_right = 2864.0
-offset_bottom = 2132.0
-scale = Vector2(0.142641, 0.168818)
+offset_left = 741.0
+offset_top = 421.0
+offset_right = 2981.0
+offset_bottom = 2641.0
+scale = Vector2(0.05, 0.05)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
 theme_override_fonts/font = ExtResource("1_hv7yp")
-theme_override_font_sizes/font_size = 32
-icon = ExtResource("6_qt0bi")
+theme_override_font_sizes/font_size = 128
+icon = ExtResource("6_8hs7v")
+flat = true
 icon_alignment = 1
+expand_icon = true
 
-[node name="ButtonD" type="Button" parent="."]
+[node name="Activation03" type="Button" parent="TeaScene/IngredientButtons"]
 visible = false
-offset_left = 632.0
-offset_top = 328.0
-offset_right = 2424.0
-offset_bottom = 1836.0
-scale = Vector2(0.142392, 0.168742)
+offset_left = 741.0
+offset_top = 421.0
+offset_right = 2981.0
+offset_bottom = 2641.0
+scale = Vector2(0.05, 0.05)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
 theme_override_fonts/font = ExtResource("1_hv7yp")
-theme_override_font_sizes/font_size = 32
-icon = ExtResource("7_240mp")
+theme_override_font_sizes/font_size = 128
+icon = ExtResource("6_8hs7v")
+flat = true
 icon_alignment = 1
+expand_icon = true
 
-[node name="ButtonAd" type="Button" parent="."]
+[node name="Activation04" type="Button" parent="TeaScene/IngredientButtons"]
+visible = false
+offset_left = 741.0
+offset_top = 421.0
+offset_right = 2981.0
+offset_bottom = 2641.0
+scale = Vector2(0.05, 0.05)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 128
+icon = ExtResource("6_8hs7v")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="Negation01" type="Button" parent="TeaScene/IngredientButtons"]
+visible = false
+offset_left = 741.0
+offset_top = 421.0
+offset_right = 2981.0
+offset_bottom = 2641.0
+scale = Vector2(0.05, 0.05)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 128
+icon = ExtResource("6_8hs7v")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="Negation02" type="Button" parent="TeaScene/IngredientButtons"]
+visible = false
+offset_left = 741.0
+offset_top = 421.0
+offset_right = 2981.0
+offset_bottom = 2641.0
+scale = Vector2(0.05, 0.05)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 128
+icon = ExtResource("6_8hs7v")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="Neutral01" type="Button" parent="TeaScene/IngredientButtons"]
+visible = false
+offset_left = 741.0
+offset_top = 421.0
+offset_right = 2981.0
+offset_bottom = 2641.0
+scale = Vector2(0.05, 0.05)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 128
+icon = ExtResource("6_8hs7v")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="Neutral02" type="Button" parent="TeaScene/IngredientButtons"]
+visible = false
+offset_left = 741.0
+offset_top = 421.0
+offset_right = 2981.0
+offset_bottom = 2641.0
+scale = Vector2(0.05, 0.05)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 128
+icon = ExtResource("6_8hs7v")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="Lavender" type="Button" parent="TeaScene/IngredientButtons"]
+visible = false
+offset_left = 741.0
+offset_top = 421.0
+offset_right = 2981.0
+offset_bottom = 2641.0
+scale = Vector2(0.05, 0.05)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 128
+icon = ExtResource("6_8hs7v")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="Milk" type="Button" parent="TeaScene/IngredientButtons"]
+visible = false
+offset_left = 1807.0
+offset_top = 509.0
+offset_right = 4047.0
+offset_bottom = 2729.0
+scale = Vector2(0.05, 0.05)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 128
+icon = ExtResource("7_50wdl")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="Mint" type="Button" parent="TeaScene/IngredientButtons"]
+visible = false
+offset_left = 857.0
+offset_top = 420.0
+offset_right = 3097.0
+offset_bottom = 2640.0
+scale = Vector2(0.05, 0.05)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 128
+icon = ExtResource("8_r0sk7")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="Sugar" type="Button" parent="TeaScene/IngredientButtons"]
+visible = false
+offset_left = 994.0
+offset_top = 508.0
+offset_right = 3234.0
+offset_bottom = 2728.0
+scale = Vector2(0.05, 0.05)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 128
+icon = ExtResource("9_jctg8")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="Datsura" type="Button" parent="TeaScene/IngredientButtons"]
+visible = false
+offset_left = 994.0
+offset_top = 508.0
+offset_right = 3234.0
+offset_bottom = 2728.0
+scale = Vector2(0.05, 0.05)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 12
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 128
+icon = ExtResource("10_ygbek")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="RitualButtons" type="Node" parent="TeaScene"]
+
+[node name="Tea Leaves Fire" type="Button" parent="TeaScene/RitualButtons"]
 visible = false
 offset_left = 256.0
 offset_top = 576.0
@@ -100,22 +342,9 @@ offset_bottom = 2084.0
 scale = Vector2(0.142923, 0.169375)
 theme_override_fonts/font = ExtResource("1_hv7yp")
 theme_override_font_sizes/font_size = 32
-icon = ExtResource("4_gymht")
 icon_alignment = 1
 
-[node name="ButtonBd" type="Button" parent="."]
-visible = false
-offset_left = 640.0
-offset_top = 768.0
-offset_right = 2432.0
-offset_bottom = 2276.0
-scale = Vector2(0.143005, 0.169952)
-theme_override_fonts/font = ExtResource("1_hv7yp")
-theme_override_font_sizes/font_size = 32
-icon = ExtResource("5_dkh5h")
-icon_alignment = 1
-
-[node name="ButtonCd" type="Button" parent="."]
+[node name="Tea Leaves Window" type="Button" parent="TeaScene/RitualButtons"]
 visible = false
 offset_left = 1024.0
 offset_top = 768.0
@@ -124,10 +353,20 @@ offset_bottom = 2276.0
 scale = Vector2(0.142641, 0.168818)
 theme_override_fonts/font = ExtResource("1_hv7yp")
 theme_override_font_sizes/font_size = 32
-icon = ExtResource("6_qt0bi")
 icon_alignment = 1
 
-[node name="ButtonDd" type="Button" parent="."]
+[node name="Stir Tea" type="Button" parent="TeaScene/RitualButtons"]
+visible = false
+offset_left = 640.0
+offset_top = 768.0
+offset_right = 2432.0
+offset_bottom = 2276.0
+scale = Vector2(0.143005, 0.169952)
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 32
+icon_alignment = 1
+
+[node name="Refill Kettle" type="Button" parent="TeaScene/RitualButtons"]
 visible = false
 offset_left = 1408.0
 offset_top = 576.0
@@ -136,56 +375,89 @@ offset_bottom = 2084.0
 scale = Vector2(0.142392, 0.168742)
 theme_override_fonts/font = ExtResource("1_hv7yp")
 theme_override_font_sizes/font_size = 32
-icon = ExtResource("7_240mp")
 icon_alignment = 1
 
-[node name="ExitButton" type="Button" parent="."]
+[node name="Alert" type="RichTextLabel" parent="TeaScene"]
 visible = false
-offset_left = 1592.0
-offset_top = 24.0
-offset_right = 1856.0
-offset_bottom = 104.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -838.0
+offset_top = -99.0
+offset_right = 838.0
+offset_bottom = -9.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 18
+theme_override_fonts/normal_font = ExtResource("1_hv7yp")
+theme_override_font_sizes/normal_font_size = 71
+bbcode_enabled = true
+text = "[center]ALERT MESSAGE[/center]"
+scroll_following = true
+autowrap_mode = 2
+
+[node name="UIbuttons" type="Node" parent="."]
+
+[node name="ExitButton" type="Button" parent="UIbuttons"]
+visible = false
+offset_left = 17.0
+offset_top = 27.0
+offset_right = 281.0
+offset_bottom = 107.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("1_hv7yp")
 theme_override_font_sizes/font_size = 54
 text = "EXIT"
 
-[node name="StartButton" type="Button" parent="."]
+[node name="StartButton" type="Button" parent="UIbuttons"]
+visible = false
 offset_left = 768.0
 offset_top = 664.0
 offset_right = 1152.0
 offset_bottom = 792.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("1_hv7yp")
 theme_override_font_sizes/font_size = 54
 text = "START"
 
-[node name="ContinueButton" type="Button" parent="."]
+[node name="QuitButton" type="Button" parent="UIbuttons"]
 visible = false
-offset_left = 768.0
-offset_top = 760.0
-offset_right = 1152.0
-offset_bottom = 888.0
-theme_override_fonts/font = ExtResource("1_hv7yp")
-theme_override_font_sizes/font_size = 54
-text = "CONTINUE"
-
-[node name="QuitButton" type="Button" parent="."]
 offset_left = 768.0
 offset_top = 872.0
 offset_right = 1152.0
 offset_bottom = 1000.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("1_hv7yp")
 theme_override_font_sizes/font_size = 54
 text = "QUIT"
 
-[connection signal="pressed" from="ButtonA" to="." method="ButtonAPressed"]
-[connection signal="pressed" from="ButtonB" to="." method="ButtonBPressed"]
-[connection signal="pressed" from="ButtonC" to="." method="ButtonCPressed"]
-[connection signal="pressed" from="ButtonD" to="." method="ButtonDPressed"]
-[connection signal="pressed" from="ButtonAd" to="." method="ButtonAdPressed"]
-[connection signal="pressed" from="ButtonBd" to="." method="ButtonBdPressed"]
-[connection signal="pressed" from="ButtonCd" to="." method="ButtonCdPressed"]
-[connection signal="pressed" from="ButtonDd" to="." method="ButtonDdPressed"]
-[connection signal="pressed" from="ExitButton" to="." method="ExitButtonPressed"]
-[connection signal="pressed" from="StartButton" to="." method="StartButtonPressed"]
-[connection signal="pressed" from="ContinueButton" to="." method="ContinueButtonPressed"]
-[connection signal="pressed" from="QuitButton" to="." method="QuitButtonPressed"]
+[connection signal="pressed" from="DreamScene/ContinueButton" to="." method="ContinueButtonPressed"]
+[connection signal="timeout" from="DreamScene/ContinueTimer" to="." method="ContinueGame"]
+[connection signal="timeout" from="TeaScene/AlertTimer" to="." method="HideAlert"]
+[connection signal="pressed" from="TeaScene/BrewButton" to="." method="BrewButtonPressed"]
+[connection signal="timeout" from="TeaScene/BrewButtonTimer" to="." method="ShowBrewButton"]
+[connection signal="pressed" from="TeaScene/IngredientButtons/Activation01" to="." method="Activation01"]
+[connection signal="pressed" from="TeaScene/IngredientButtons/Activation02" to="." method="Activation02"]
+[connection signal="pressed" from="TeaScene/IngredientButtons/Activation03" to="." method="Activation03"]
+[connection signal="pressed" from="TeaScene/IngredientButtons/Activation04" to="." method="Activation04"]
+[connection signal="pressed" from="TeaScene/IngredientButtons/Negation01" to="." method="Negation01"]
+[connection signal="pressed" from="TeaScene/IngredientButtons/Negation02" to="." method="Negation02"]
+[connection signal="pressed" from="TeaScene/IngredientButtons/Neutral01" to="." method="Neutral01"]
+[connection signal="pressed" from="TeaScene/IngredientButtons/Neutral02" to="." method="Neutral02"]
+[connection signal="pressed" from="TeaScene/IngredientButtons/Lavender" to="." method="Lavender"]
+[connection signal="pressed" from="TeaScene/IngredientButtons/Milk" to="." method="Milk"]
+[connection signal="pressed" from="TeaScene/IngredientButtons/Mint" to="." method="Mint"]
+[connection signal="pressed" from="TeaScene/IngredientButtons/Sugar" to="." method="Sugar"]
+[connection signal="pressed" from="TeaScene/IngredientButtons/Datsura" to="." method="Datsura"]
+[connection signal="pressed" from="TeaScene/RitualButtons/Tea Leaves Fire" to="." method="ActivationIngredientSelected"]
+[connection signal="pressed" from="TeaScene/RitualButtons/Tea Leaves Window" to="." method="NegationIngredientSelected"]
+[connection signal="pressed" from="TeaScene/RitualButtons/Stir Tea" to="." method="ActivationIngredientSelected"]
+[connection signal="pressed" from="TeaScene/RitualButtons/Refill Kettle" to="." method="NeutralIngredientSelected"]
+[connection signal="pressed" from="UIbuttons/ExitButton" to="." method="ExitButtonPressed"]
+[connection signal="pressed" from="UIbuttons/StartButton" to="." method="StartButtonPressed"]
+[connection signal="pressed" from="UIbuttons/QuitButton" to="." method="QuitButtonPressed"]

@@ -1,0 +1,24 @@
+[remap]
+
+importer="wav"
+type="AudioStreamWAV"
+uid="uid://c17pbrnln01"
+path="res://.godot/imported/Wind Storm Sound Effect - Free Sound Stock.wav-8477349810f04555d7b2e4287eaa19f0.sample"
+
+[deps]
+
+source_file="res://Assets/Audio/Effects/Wind Storm Sound Effect - Free Sound Stock.wav"
+dest_files=["res://.godot/imported/Wind Storm Sound Effect - Free Sound Stock.wav-8477349810f04555d7b2e4287eaa19f0.sample"]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

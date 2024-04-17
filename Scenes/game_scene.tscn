@@ -1,7 +1,105 @@
-[gd_scene load_steps=3 format=3 uid="uid://qud8chm7nnfi"]
+[gd_scene load_steps=11 format=3 uid="uid://qud8chm7nnfi"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/game_scene.gd" id="1_tg35j"]
 [ext_resource type="PackedScene" uid="uid://b8208rhcnhse7" path="res://Scenes/ui.tscn" id="1_vadmo"]
+[ext_resource type="AudioStream" uid="uid://djtfuyqdp6hwy" path="res://Assets/Audio/Music/TeaTheme.wav" id="3_wte5l"]
+[ext_resource type="AudioStream" uid="uid://ct0vrtwchnf3q" path="res://Assets/Audio/Music/DreamTheme.wav" id="4_knf2w"]
+
+[sub_resource type="Animation" id="Animation_aitxw"]
+resource_name = "FadeMusic"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DreamTheme:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.66533e-15, -80.0]
+}
+
+[sub_resource type="Animation" id="Animation_r21hq"]
+resource_name = "TeaToDream"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DreamTheme:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-80.0, 1.66533e-15]
+}
+
+[sub_resource type="Animation" id="Animation_17e4m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TeaTheme:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DreamTheme:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_316vf"]
+resource_name = "TeaToDream"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TeaTheme:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, -80.0]
+}
+
+[sub_resource type="Animation" id="Animation_80kis"]
+resource_name = "FadeMusic"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TeaTheme:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-80.0, 1.66533e-15]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_gmkfr"]
+_data = {
+"DreamDown": SubResource("Animation_aitxw"),
+"DreamUp": SubResource("Animation_r21hq"),
+"RESET": SubResource("Animation_17e4m"),
+"TeaDown": SubResource("Animation_316vf"),
+"TeaUp": SubResource("Animation_80kis")
+}
 
 [node name="GameScene" type="Node2D"]
 script = ExtResource("1_tg35j")
@@ -13,15 +111,40 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 color = Color(0.172549, 0.541176, 0.431373, 1)
 
-[connection signal="choiceA" from="UI" to="." method="ChoiceASelected"]
-[connection signal="choiceAd" from="UI" to="." method="ChoiceAdSelected"]
-[connection signal="choiceB" from="UI" to="." method="ChoiceBSelected"]
-[connection signal="choiceBd" from="UI" to="." method="ChoiceBdSelected"]
-[connection signal="choiceC" from="UI" to="." method="ChoiceCSelected"]
-[connection signal="choiceCd" from="UI" to="." method="ChoiceCdSelected"]
-[connection signal="choiceD" from="UI" to="." method="ChoiceDSelected"]
-[connection signal="choiceDd" from="UI" to="." method="ChoiceDdSelected"]
-[connection signal="proceed" from="UI" to="." method="ContinueButtonPressed"]
+[node name="Audio" type="Node" parent="."]
+
+[node name="TeaTheme" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("3_wte5l")
+
+[node name="DreamTheme" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("4_knf2w")
+
+[node name="Effects" type="Node" parent="Audio"]
+
+[node name="MusicFader" type="AnimationPlayer" parent="Audio"]
+libraries = {
+"": SubResource("AnimationLibrary_gmkfr")
+}
+playback_default_blend_time = 1.0
+
+[node name="FadeTimer" type="Timer" parent="Audio"]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="resetButtons" from="." to="." method="ResetButtons"]
+[connection signal="revealDatsura" from="." to="UI" method="RevealDatsura"]
+[connection signal="activation" from="UI" to="." method="ActivationIngredientSelected"]
+[connection signal="brewTea" from="UI" to="." method="BrewTea"]
+[connection signal="datsura" from="UI" to="." method="DatsuraSelected"]
+[connection signal="dreamScene" from="UI" to="." method="DreamScene"]
+[connection signal="menuScene" from="UI" to="." method="MenuScene"]
+[connection signal="negation" from="UI" to="." method="NegationIngredientSelected"]
+[connection signal="neutral" from="UI" to="." method="NeutralIngredientSelected"]
+[connection signal="proceed" from="UI" to="." method="Proceed"]
 [connection signal="quitGame" from="UI" to="." method="QuitGame"]
 [connection signal="returnToMenu" from="UI" to="." method="ReturnToMenu"]
 [connection signal="startGame" from="UI" to="." method="StartGame"]
+[connection signal="teaScene" from="UI" to="." method="TeaScene"]
+[connection signal="finished" from="Audio/TeaTheme" to="." method="MusicFinished"]
+[connection signal="finished" from="Audio/DreamTheme" to="." method="MusicFinished"]
+[connection signal="timeout" from="Audio/FadeTimer" to="." method="FadeTimerEnd"]

@@ -1,236 +1,260 @@
 extends Node2D
 
-@export var standardText = ["START TEXT", "MENU TEXT", "CORRECT CHOICE", "INCORRECT CHOICE"]
-@export var endText = ["NEVER PASSED SCENE 1", "NEVER PASSED SCENE 2", "NEVER PASSED SCENE 3",
-					"NEVER PASSED SCENE 4", "REACHED END, BUT FOUND 0 CLUES",
-					"REACHED END, BUT ONLY FOUND 1 CLUE", "REACHED END, BUT ONLY FOUND 2 CLUES",
-					"REACHED END, BUT ONLY FOUND 3 CLUES", "REACHED END, AND FOUND ALL 4 CLUES"]
-@export var dreamText = []
-@export var teaText = []
+signal revealDatsura
+signal resetButtons
 
-var sceneNum = 0
-var choiceNum = 0
-var dreamCorrect = 0
-var teaCorrect = 0
-var turnsRemaining = 9
-var correct = false
-var goToDream = false
-var inDream = false
+var menuText = ""
+var dreamText = []
+var teaText = []
+var instructions = []
+var alerts = []
+
+# Global Variables...
+@export var requiredChoiceNum = 2
+var CHOICE_REQ = requiredChoiceNum
+var sceneOptions = []
+var choiceTracker = []
+var datsuraGiven = false
+var datsuraSelected = false
+var choiceCount = 0
+var sceneCount = 0
+var sceneChange = false
+var gameReset = false
+var peaceful = true
+var scene = ""
+
+###########################
+## UI NAVIGATION METHODS ##
+###########################
+
+func _ready():
+	teaText = GetTextFromFile("TeaText")
+	dreamText = GetTextFromFile("DreamText")
+	menuText = GetTextFromFile("MenuText")
+	instructions = GetTextFromFile("Instructions")
+	alerts = GetTextFromFile("Alerts")
+	ResetGame()
+	$UI.HideTeaScene()
+	$UI.HideDreamScene()
+	$UI.ShowMainMenu()
+
+func GetTextFromFile(filename):
+	var file = FileAccess.open("res://Assets/TextFiles/" + filename + ".txt", FileAccess.READ)
+	var data = []
+	while(not file.eof_reached()):
+		data.append(file.get_line())
+	
+	return data
 
 func StartGame():
+	gameReset = false
 	$UI.HideMainMenu()
-	$UI.ShowTeaScene()
-	$UI.ShowMessage(standardText[0])
-	sceneNum += 1
+	GoToTeaScene(teaText[sceneCount], instructions[0])
 
 func ResetGame():
-	sceneNum = 0
-	choiceNum = 0
-	dreamCorrect = 0
-	teaCorrect = 0
-	turnsRemaining = 10
-	correct = false
-	goToDream = false
-	inDream = false
+	datsuraGiven = false
+	gameReset = true
+	peaceful = true
+	sceneOptions = ['A', 'B', 'C']
+	choiceTracker = [0, 0, 0]
+	datsuraSelected = false
+	sceneCount = 1
+	if($Audio/TeaTheme.playing):
+		TrackOperations("TeaTheme")
+	if($Audio/DreamTheme.playing):
+		TrackOperations("DreamTheme")
 
 func ReturnToMenu():
 	ResetGame()
 	$UI.HideDreamScene()
 	$UI.HideTeaScene()
 	$UI.ShowMainMenu()
-	$UI.ShowMessage(standardText[1])
 
 func QuitGame():
-	print("Game Exited")
 	get_tree().quit()
-
-func ChoiceASelected():
-	print("Choice A Selected")
-	choiceNum += 1
-	
-	if(choiceNum == 1):
-		if(sceneNum == 2):
-			correct = true
-			teaCorrect += 1
-	elif(choiceNum == 2):
-		if(sceneNum == 1):
-			correct = true
-			teaCorrect += 1
-	
-	ProcessTurn()
-
-func ChoiceBSelected():
-	print("Choice B Selected")
-	choiceNum += 1
-	
-	if(choiceNum == 1 and sceneNum == 1):
-			correct = true
-			teaCorrect += 1
-	elif(choiceNum == 2 and sceneNum == 4):
-			correct = true
-			teaCorrect += 1
-	
-	ProcessTurn()
-
-func ChoiceCSelected():
-	print("Choice C Selected")
-	choiceNum += 1
-	
-	if(choiceNum == 1 and sceneNum == 4):
-			correct = true
-			teaCorrect += 1
-	elif(choiceNum == 2 and sceneNum == 3):
-			correct = true
-			teaCorrect += 1
-	
-	ProcessTurn()
-
-func ChoiceDSelected():
-	print("Choice D Selected")
-	choiceNum += 1
-	
-	if(choiceNum == 1 and sceneNum == 3):
-			correct = true
-			teaCorrect += 1
-	elif(choiceNum == 2 and sceneNum == 2):
-			correct = true
-			teaCorrect += 1
-	
-	ProcessTurn()
-
-func ProcessTurn():
-	print("Choice Number: ", choiceNum)
-	print("Tea Correct: ", teaCorrect)
-	
-	if(correct):
-		$UI.ShowMessage(standardText[2])
-		if(choiceNum > 1):
-			if(teaCorrect == 2):
-				goToDream = true
-				teaCorrect = 0
-			
-			teaCorrect = 0
-			choiceNum = 0
-			ContinueGame()
-	else:
-		$UI.ShowMessage(standardText[3])
-		if(choiceNum > 1):
-			choiceNum = 0
-			ContinueGame()
-	
-	correct = false
 
 func ContinueGame():
 	$UI.HideDreamScene()
 	$UI.HideTeaScene()
 	$UI.ShowContinueScene()
-	
-	print("Scene: ", sceneNum)
-	print("Turns Remaining: ", turnsRemaining)
 
-func GoToDream():
-	goToDream = false
-	inDream = true
-	$UI.ShowDreamScene()
+func GoToDream(dreamTextOption):
+	if(not peaceful):
+		sceneCount += 1
+		if(not $Audio/DreamTheme.playing):
+			print("Dream Track not playing.")
+			sceneChange = true
+			TrackOperations("DreamTheme")
+		$UI.HideTeaScene()
+		$UI.ShowDreamScene(dreamTextOption)
+	else:
+		$UI.HideTeaScene()
+		$UI.ShowDreamScene(dreamTextOption)
 
-func GoToNextScene():
-	sceneNum += 1
-	turnsRemaining -= 1
+func GoToTeaScene(teaTextOption, instruction):
+	choiceCount = 0
+	choiceTracker = [0, 0, 0]
+	resetButtons.emit()
+	if(not $Audio/TeaTheme.playing):
+		print("Tea Track not playing.")
+		sceneChange = true
+		TrackOperations("TeaTheme")
 	$UI.HideDreamScene()
-	$UI.ShowTeaScene()
+	$UI.ShowTeaScene(teaTextOption, instruction)
 
-func RestartScene():
-	turnsRemaining -= 1
-	$UI.ShowTeaScene()
+func ActivationIngredientSelected():
+	choiceTracker[0] += 1
+	choiceCount += 1
+	print("Activation ingredient selected.")
 
-func ContinueButtonPressed():	
-	if(turnsRemaining > 0):
-		if(goToDream):
-			GoToDream()
-		elif(inDream):
-			inDream = false
-			if(sceneNum > 3):
-				sceneNum += 1
-				GoToEnd()
-			else:
-				GoToNextScene()
+func NegationIngredientSelected():
+	choiceTracker[1] += 1
+	choiceCount += 1
+	print("Negation ingredient selected.")
+
+func NeutralIngredientSelected():
+	choiceTracker[2] += 1
+	choiceCount += 1
+	print("Neutral ingredient selected.")
+
+func DatsuraSelected():
+	datsuraSelected = true
+
+func BrewTea():
+	print("Choices Made: ", choiceCount)
+	var RNG = RandomNumberGenerator.new()
+	if(choiceCount < CHOICE_REQ):
+		print("NOT ENOUGH CHOICES")
+		# DO NOTHING
+		$UI.ShowAlert(alerts[0])
+	elif(datsuraGiven == true):
+		print("DATSURA GIVEN")
+		if(datsuraSelected == false):
+			print("DATSURA NOT USED")
+			# DO NOT ENTER DREAM
+			peaceful = true
+			GoToDream(dreamText[0])
 		else:
-			RestartScene()
-	else:
-		GoToEnd()
-	
-	$UI.HideContinueScene()
-
-
-func ChoiceAdSelected():
-	print("Dream Choice A Selected")
-	
-	if(sceneNum == 1):
-		dreamCorrect += 1
-		$UI.ShowMessage(standardText[2])
-	else:
-		$UI.ShowMessage(standardText[3])
-	
-	print("Correct Dream Answers: ", dreamCorrect)
-	ContinueGame()
-
-func ChoiceBdSelected():
-	print("Dream Choice B Selected")
-	
-	if(sceneNum == 4):
-		dreamCorrect += 1
-		$UI.ShowMessage(standardText[2])
-	else:
-		$UI.ShowMessage(standardText[3])
-	
-	print("Correct Dream Answers: ", dreamCorrect)
-	ContinueGame()
-
-func ChoiceCdSelected():
-	print("Dream Choice C Selected")
-	
-	if(sceneNum == 3):
-		dreamCorrect += 1
-		$UI.ShowMessage(standardText[2])
-	else:
-		$UI.ShowMessage(standardText[3])
-	
-	print("Correct Dream Answers: ", dreamCorrect)
-	ContinueGame()
-
-func ChoiceDdSelected():
-	print("Dream Choice D Selected")
-	print("Scene: ", sceneNum)
-	
-	if(sceneNum == 2):
-		dreamCorrect += 1
-		$UI.ShowMessage(standardText[2])
-	else:
-		$UI.ShowMessage(standardText[3])
-	
-	print("Correct Dream Answers: ", dreamCorrect)
-	ContinueGame()
-
-func GoToEnd():
-	print("End Reached")
-	
-	match sceneNum:
-		1:
-			$UI.ShowMessage(endText[0])
-		2:
-			$UI.ShowMessage(endText[1])
-		3:
-			$UI.ShowMessage(endText[2])
-		4:
-			$UI.ShowMessage(endText[3])
-		5:
-			if(dreamCorrect == 4):
-				$UI.ShowMessage(endText[8])
-			elif(dreamCorrect == 3):
-				$UI.ShowMessage(endText[7])
-			elif(dreamCorrect == 2):
-				$UI.ShowMessage(endText[6])
-			elif(dreamCorrect == 1):
-				$UI.ShowMessage(endText[5])
+			print("DATSURA USED")
+			peaceful = false
+			# ENTER FINAL DREAM
+			GoToDream(dreamText[5])
+	elif(len(sceneOptions) > 0):
+		print("DREAMS REMAINING")
+		if (choiceTracker[1] > 0 or choiceTracker[0] == 0):
+			print("NEGATION CHOSEN")
+			# DO NOT ENTER DREAM
+			peaceful = true
+			GoToDream(dreamText[0])
+		else:
+			print("NEGATION NOT CHOSEN")
+			# ENTER DREAM
+			var randomNumber = RNG.randi_range(0, len(sceneOptions) - 1)
+			var choice = sceneOptions[randomNumber]
+			sceneOptions.pop_at(randomNumber)
+			
+			if(choice == 'A'):
+				print("ENTERING DREAM A")
+				peaceful = false
+				GoToDream(dreamText[1])
+			elif(choice == 'B'):
+				print("ENTERING DREAM B")
+				peaceful = false
+				GoToDream(dreamText[2])
 			else:
-				$UI.ShowMessage(endText[4])
+				print("ENTERING DREAM C")
+				peaceful = false
+				GoToDream(dreamText[3])
+	else:
+		print("NO DREAMS REMAINING")
+		if (choiceTracker[1] > 0 or choiceTracker[0] == 0):
+			print("NEGATION CHOSEN")
+			# DO NOT ENTER DREAM
+			peaceful = true
+			GoToDream(dreamText[0])
+		else:
+			print("ENTERING INARI ENCOUNTER")
+			revealDatsura.emit()
+			peaceful = false
+			GoToDream(dreamText[4])
+
+func Proceed():
+	if(sceneCount >= 5):
+		if(peaceful == false):
+			ReturnToMenu()
+		else:
+			peaceful = true
+			GoToTeaScene(teaText[0], instructions[0])
+	else:
+		if(peaceful == false):
+			GoToTeaScene(teaText[sceneCount], instructions[0])
+		else:
+			peaceful = true
+			GoToTeaScene(teaText[0], instructions[0])
+
+
+func MusicFinished():
+	if(not sceneChange):
+		print("Scene NOT changed.")
+		if(scene == "tea"):
+			print("Replaying TEA TRACK.")
+			$Audio/TeaTheme.play()
+		else:
+			print("Replaying DREAM TRACK.")
+			$Audio/DreamTheme.play()
+	else:
+		print("Scene changed.")
+		print("Not replaying track.")
+
+func TrackOperations(track):
+	if (track == "TeaTheme"):
+		print("Turning down DREAM TRACK.")
+		$Audio/MusicFader.play("DreamDown")
+	elif (track == "DreamTheme"):
+		print("Turning down TEA TRACK.")
+		$Audio/MusicFader.play("TeaDown")
+	
+	print("Starting FADE TIMER.")
+	$Audio/FadeTimer.start()
+
+func FadeTimerEnd():
+	if(gameReset == true):
+		print("Game is being reset.")
+		print("Stopping both tracks.")
+		$Audio/TeaTheme.stop()
+		$Audio/DreamTheme.stop()
+		print("Resetting track volumes.")
+		$Audio/MusicFader.play("TeaUp")
+		$Audio/MusicFader.play("DreamUp")
+		gameReset = false
+	else:
+		print("Game is not being reset.")
+		if($Audio/TeaTheme.playing):
+			print("Stopping TEA TRACK.")
+			$Audio/TeaTheme.stop()
+			print("Playing DREAM TRACK.")
+			$Audio/DreamTheme.play()
+			print("Resetting Tea Track volume.")
+			$Audio/MusicFader.play("TeaUp")
+		else:
+			print("Stopping DREAM TRACK.")
+			$Audio/DreamTheme.stop()
+			print("Playing TEA TRACK.")
+			$Audio/TeaTheme.play()
+			print("Resetting DREAM TRACK volume.")
+			$Audio/MusicFader.play("DreamUp")
+	
+	if(sceneChange == true):
+		sceneChange = false
+
+func ResetButtons():
+	pass # Replace with function body.
+
+func TeaScene():
+	scene = "tea"
+
+func DreamScene():
+	scene = "dream"
+
+func MenuScene():
+	scene = "menu"
