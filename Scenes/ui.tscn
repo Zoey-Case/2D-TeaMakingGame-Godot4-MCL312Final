@@ -22,23 +22,16 @@ script = ExtResource("1_1oqtc")
 [node name="DreamBackdrop" type="Sprite2D" parent="DreamScene"]
 visible = false
 material = SubResource("CanvasItemMaterial_0hq7j")
-position = Vector2(960, 544)
+position = Vector2(960, 540)
 rotation = 3.14159
 texture = ExtResource("2_766j6")
 
 [node name="DreamMessage" type="RichTextLabel" parent="DreamScene"]
 visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -895.0
-offset_top = -361.0
-offset_right = 896.0
-offset_bottom = 512.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_left = 45.0
+offset_top = 126.0
+offset_right = 1867.0
+offset_bottom = 897.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -46,28 +39,27 @@ theme_override_constants/outline_size = 6
 theme_override_fonts/normal_font = ExtResource("1_hv7yp")
 theme_override_font_sizes/normal_font_size = 56
 bbcode_enabled = true
-text = "[center]DREAM MESSAGE[/center]"
+text = "DREAM MESSAGE"
 script = ExtResource("4_vtsro")
 
 [node name="ContinueButton" type="Button" parent="DreamScene"]
 visible = false
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -192.0
-offset_top = -124.0
-offset_right = 192.0
-offset_bottom = -36.0
-grow_horizontal = 2
-grow_vertical = 0
+offset_left = 808.0
+offset_top = 949.0
+offset_right = 1105.0
+offset_bottom = 1023.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 theme_override_fonts/font = ExtResource("1_hv7yp")
 theme_override_font_sizes/font_size = 54
 text = "CONTINUE"
 
 [node name="ContinueTimer" type="Timer" parent="DreamScene"]
-wait_time = 10.0
+wait_time = 12.0
+one_shot = true
+
+[node name="ContinueTimerFast" type="Timer" parent="DreamScene"]
+wait_time = 2.0
 one_shot = true
 
 [node name="TeaScene" type="Node" parent="."]
@@ -75,22 +67,15 @@ one_shot = true
 [node name="TeaBackdrop" type="Sprite2D" parent="TeaScene"]
 visible = false
 material = SubResource("CanvasItemMaterial_0hq7j")
-position = Vector2(960, 544)
+position = Vector2(960, 540)
 texture = ExtResource("3_l8uri")
 
 [node name="TeaMessage" type="RichTextLabel" parent="TeaScene"]
 visible = false
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -915.0
-offset_top = -372.0
-offset_right = 916.0
-offset_bottom = -80.0
-grow_horizontal = 2
-grow_vertical = 0
+offset_left = 47.0
+offset_top = 706.0
+offset_right = 1875.0
+offset_bottom = 994.0
 size_flags_horizontal = 4
 size_flags_vertical = 8
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -103,10 +88,6 @@ scroll_following = true
 autowrap_mode = 2
 script = ExtResource("4_vtsro")
 
-[node name="AlertTimer" type="Timer" parent="TeaScene"]
-wait_time = 5.0
-one_shot = true
-
 [node name="BrewButton" type="Button" parent="TeaScene"]
 visible = false
 offset_left = 17.0
@@ -116,10 +97,6 @@ offset_bottom = 255.0
 theme_override_fonts/font = ExtResource("1_hv7yp")
 theme_override_font_sizes/font_size = 54
 text = "BREW TEA"
-
-[node name="BrewButtonTimer" type="Timer" parent="TeaScene"]
-wait_time = 3.0
-one_shot = true
 
 [node name="IngredientButtons" type="Node" parent="TeaScene"]
 
@@ -254,9 +231,9 @@ expand_icon = true
 [node name="Lavender" type="Button" parent="TeaScene/IngredientButtons"]
 visible = false
 offset_left = 741.0
-offset_top = 421.0
+offset_top = 417.0
 offset_right = 2981.0
-offset_bottom = 2641.0
+offset_bottom = 2637.0
 scale = Vector2(0.05, 0.05)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 12
@@ -270,9 +247,9 @@ expand_icon = true
 [node name="Milk" type="Button" parent="TeaScene/IngredientButtons"]
 visible = false
 offset_left = 1807.0
-offset_top = 509.0
+offset_top = 505.0
 offset_right = 4047.0
-offset_bottom = 2729.0
+offset_bottom = 2725.0
 scale = Vector2(0.05, 0.05)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 12
@@ -286,9 +263,9 @@ expand_icon = true
 [node name="Mint" type="Button" parent="TeaScene/IngredientButtons"]
 visible = false
 offset_left = 857.0
-offset_top = 420.0
+offset_top = 416.0
 offset_right = 3097.0
-offset_bottom = 2640.0
+offset_bottom = 2636.0
 scale = Vector2(0.05, 0.05)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 12
@@ -302,9 +279,9 @@ expand_icon = true
 [node name="Sugar" type="Button" parent="TeaScene/IngredientButtons"]
 visible = false
 offset_left = 994.0
-offset_top = 508.0
+offset_top = 504.0
 offset_right = 3234.0
-offset_bottom = 2728.0
+offset_bottom = 2724.0
 scale = Vector2(0.05, 0.05)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 12
@@ -317,10 +294,10 @@ expand_icon = true
 
 [node name="Datsura" type="Button" parent="TeaScene/IngredientButtons"]
 visible = false
-offset_left = 994.0
-offset_top = 508.0
-offset_right = 3234.0
-offset_bottom = 2728.0
+offset_left = 1195.0
+offset_top = 504.0
+offset_right = 3435.0
+offset_bottom = 2724.0
 scale = Vector2(0.05, 0.05)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 12
@@ -377,44 +354,27 @@ theme_override_fonts/font = ExtResource("1_hv7yp")
 theme_override_font_sizes/font_size = 32
 icon_alignment = 1
 
-[node name="Alert" type="RichTextLabel" parent="TeaScene"]
-visible = false
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -838.0
-offset_top = -99.0
-offset_right = 838.0
-offset_bottom = -9.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 8
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 18
-theme_override_fonts/normal_font = ExtResource("1_hv7yp")
-theme_override_font_sizes/normal_font_size = 71
-bbcode_enabled = true
-text = "[center]ALERT MESSAGE[/center]"
-scroll_following = true
-autowrap_mode = 2
+[node name="MenuScene" type="Node" parent="."]
 
-[node name="UIbuttons" type="Node" parent="."]
-
-[node name="ExitButton" type="Button" parent="UIbuttons"]
+[node name="MenuBackdrop" type="Sprite2D" parent="MenuScene"]
 visible = false
-offset_left = 17.0
-offset_top = 27.0
-offset_right = 281.0
-offset_bottom = 107.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
+material = SubResource("CanvasItemMaterial_0hq7j")
+position = Vector2(960, 540)
+rotation = 3.14159
+texture = ExtResource("2_766j6")
+
+[node name="TITLE" type="Label" parent="MenuScene"]
+visible = false
+offset_top = 235.0
+offset_right = 1920.0
+offset_bottom = 402.0
 theme_override_fonts/font = ExtResource("1_hv7yp")
-theme_override_font_sizes/font_size = 54
-text = "EXIT"
+theme_override_font_sizes/font_size = 128
+text = "SLEEPY TIME TEA"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="StartButton" type="Button" parent="UIbuttons"]
+[node name="StartButton" type="Button" parent="MenuScene"]
 visible = false
 offset_left = 768.0
 offset_top = 664.0
@@ -425,7 +385,7 @@ theme_override_fonts/font = ExtResource("1_hv7yp")
 theme_override_font_sizes/font_size = 54
 text = "START"
 
-[node name="QuitButton" type="Button" parent="UIbuttons"]
+[node name="ExitButton" type="Button" parent="MenuScene"]
 visible = false
 offset_left = 768.0
 offset_top = 872.0
@@ -434,13 +394,25 @@ offset_bottom = 1000.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("1_hv7yp")
 theme_override_font_sizes/font_size = 54
+text = "EXIT"
+
+[node name="UIbuttons" type="Node" parent="."]
+
+[node name="QuitButton" type="Button" parent="UIbuttons"]
+visible = false
+offset_left = 17.0
+offset_top = 27.0
+offset_right = 281.0
+offset_bottom = 107.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_hv7yp")
+theme_override_font_sizes/font_size = 54
 text = "QUIT"
 
 [connection signal="pressed" from="DreamScene/ContinueButton" to="." method="ContinueButtonPressed"]
 [connection signal="timeout" from="DreamScene/ContinueTimer" to="." method="ContinueGame"]
-[connection signal="timeout" from="TeaScene/AlertTimer" to="." method="HideAlert"]
+[connection signal="timeout" from="DreamScene/ContinueTimerFast" to="." method="ContinueGame"]
 [connection signal="pressed" from="TeaScene/BrewButton" to="." method="BrewButtonPressed"]
-[connection signal="timeout" from="TeaScene/BrewButtonTimer" to="." method="ShowBrewButton"]
 [connection signal="pressed" from="TeaScene/IngredientButtons/Activation01" to="." method="Activation01"]
 [connection signal="pressed" from="TeaScene/IngredientButtons/Activation02" to="." method="Activation02"]
 [connection signal="pressed" from="TeaScene/IngredientButtons/Activation03" to="." method="Activation03"]
@@ -454,10 +426,6 @@ text = "QUIT"
 [connection signal="pressed" from="TeaScene/IngredientButtons/Mint" to="." method="Mint"]
 [connection signal="pressed" from="TeaScene/IngredientButtons/Sugar" to="." method="Sugar"]
 [connection signal="pressed" from="TeaScene/IngredientButtons/Datsura" to="." method="Datsura"]
-[connection signal="pressed" from="TeaScene/RitualButtons/Tea Leaves Fire" to="." method="ActivationIngredientSelected"]
-[connection signal="pressed" from="TeaScene/RitualButtons/Tea Leaves Window" to="." method="NegationIngredientSelected"]
-[connection signal="pressed" from="TeaScene/RitualButtons/Stir Tea" to="." method="ActivationIngredientSelected"]
-[connection signal="pressed" from="TeaScene/RitualButtons/Refill Kettle" to="." method="NeutralIngredientSelected"]
-[connection signal="pressed" from="UIbuttons/ExitButton" to="." method="ExitButtonPressed"]
-[connection signal="pressed" from="UIbuttons/StartButton" to="." method="StartButtonPressed"]
+[connection signal="pressed" from="MenuScene/StartButton" to="." method="StartButtonPressed"]
+[connection signal="pressed" from="MenuScene/ExitButton" to="." method="ExitButtonPressed"]
 [connection signal="pressed" from="UIbuttons/QuitButton" to="." method="QuitButtonPressed"]

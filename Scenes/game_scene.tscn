@@ -1,38 +1,65 @@
-[gd_scene load_steps=11 format=3 uid="uid://qud8chm7nnfi"]
+[gd_scene load_steps=14 format=3 uid="uid://qud8chm7nnfi"]
 
 [ext_resource type="Script" path="res://Assets/Scripts/game_scene.gd" id="1_tg35j"]
 [ext_resource type="PackedScene" uid="uid://b8208rhcnhse7" path="res://Scenes/ui.tscn" id="1_vadmo"]
-[ext_resource type="AudioStream" uid="uid://djtfuyqdp6hwy" path="res://Assets/Audio/Music/TeaTheme.wav" id="3_wte5l"]
-[ext_resource type="AudioStream" uid="uid://ct0vrtwchnf3q" path="res://Assets/Audio/Music/DreamTheme.wav" id="4_knf2w"]
+[ext_resource type="AudioStream" uid="uid://cnu28tpmp6d26" path="res://Assets/Audio/Music/TeaTheme.mp3" id="3_ka3vh"]
+[ext_resource type="AudioStream" uid="uid://udac3sb81x5g" path="res://Assets/Audio/Music/DreamTheme.mp3" id="4_timtb"]
+[ext_resource type="AudioStream" uid="uid://g2vltofg25ea" path="res://Assets/Audio/Effects/PouringWater.mp3" id="5_dgfqt"]
+[ext_resource type="AudioStream" uid="uid://dcr8xae2fepr" path="res://Assets/Audio/Effects/Weather.mp3" id="6_fx1sv"]
 
-[sub_resource type="Animation" id="Animation_aitxw"]
-resource_name = "FadeMusic"
+[sub_resource type="Animation" id="Animation_pg1xr"]
+resource_name = "BothDown"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("DreamTheme:volume_db")
+tracks/0/path = NodePath("Music/DreamTheme:volume_db")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
+"transitions": PackedFloat32Array(1, 0.4),
 "update": 0,
-"values": [1.66533e-15, -80.0]
+"values": [4.0, -80.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Music/TeaTheme:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 0.4),
+"update": 0,
+"values": [4.0, -80.0]
 }
 
-[sub_resource type="Animation" id="Animation_r21hq"]
+[sub_resource type="Animation" id="Animation_p6lb2"]
 resource_name = "TeaToDream"
+length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("DreamTheme:volume_db")
+tracks/0/path = NodePath("Music/DreamTheme:volume_db")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [-80.0, 1.66533e-15]
+"values": [4.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Music/TeaTheme:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 2),
+"update": 0,
+"values": [4.0, -80.0]
 }
 
 [sub_resource type="Animation" id="Animation_17e4m"]
@@ -40,7 +67,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TeaTheme:volume_db")
+tracks/0/path = NodePath("Music/TeaTheme:volume_db")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -52,53 +79,96 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("DreamTheme:volume_db")
+tracks/1/path = NodePath("Music/DreamTheme:volume_db")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
+"values": [1.66533e-15]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Effects/Weather:volume_db")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
 "values": [0.0]
 }
 
-[sub_resource type="Animation" id="Animation_316vf"]
-resource_name = "TeaToDream"
+[sub_resource type="Animation" id="Animation_1j03m"]
+resource_name = "FadeMusic"
+length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TeaTheme:volume_db")
+tracks/0/path = NodePath("Music/TeaTheme:volume_db")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [0.0, -80.0]
+"values": [-80.0, 4.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Music/DreamTheme:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 2),
+"update": 0,
+"values": [4.0, -80.0]
 }
 
-[sub_resource type="Animation" id="Animation_80kis"]
-resource_name = "FadeMusic"
+[sub_resource type="Animation" id="Animation_mpa7y"]
+resource_name = "WeatherDown"
+length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("TeaTheme:volume_db")
+tracks/0/path = NodePath("Effects/Weather:volume_db")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 2),
 "update": 0,
-"values": [-80.0, 1.66533e-15]
+"values": [-10.0, -40.0]
+}
+
+[sub_resource type="Animation" id="Animation_6cura"]
+resource_name = "WeatherUp"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Effects/Weather:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 2),
+"update": 0,
+"values": [-40.0, -10.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_gmkfr"]
 _data = {
-"DreamDown": SubResource("Animation_aitxw"),
-"DreamUp": SubResource("Animation_r21hq"),
+"BothDown": SubResource("Animation_pg1xr"),
+"DreamUp": SubResource("Animation_p6lb2"),
 "RESET": SubResource("Animation_17e4m"),
-"TeaDown": SubResource("Animation_316vf"),
-"TeaUp": SubResource("Animation_80kis")
+"TeaUp": SubResource("Animation_1j03m"),
+"WeatherDown": SubResource("Animation_mpa7y"),
+"WeatherUp": SubResource("Animation_6cura")
 }
 
 [node name="GameScene" type="Node2D"]
@@ -113,38 +183,71 @@ color = Color(0.172549, 0.541176, 0.431373, 1)
 
 [node name="Audio" type="Node" parent="."]
 
-[node name="TeaTheme" type="AudioStreamPlayer" parent="Audio"]
-stream = ExtResource("3_wte5l")
+[node name="Music" type="Node" parent="Audio"]
 
-[node name="DreamTheme" type="AudioStreamPlayer" parent="Audio"]
-stream = ExtResource("4_knf2w")
-
-[node name="Effects" type="Node" parent="Audio"]
-
-[node name="MusicFader" type="AnimationPlayer" parent="Audio"]
+[node name="MusicFader" type="AnimationPlayer" parent="Audio/Music"]
+root_node = NodePath("../..")
 libraries = {
 "": SubResource("AnimationLibrary_gmkfr")
 }
-playback_default_blend_time = 1.0
+playback_default_blend_time = 1.2
+
+[node name="TeaTheme" type="AudioStreamPlayer2D" parent="Audio/Music"]
+position = Vector2(960, 540)
+stream = ExtResource("3_ka3vh")
+max_polyphony = 12
+area_mask = 0
+
+[node name="DreamTheme" type="AudioStreamPlayer2D" parent="Audio/Music"]
+position = Vector2(960, 540)
+stream = ExtResource("4_timtb")
+max_polyphony = 12
+area_mask = 0
+
+[node name="Effects" type="Node" parent="Audio"]
+
+[node name="WeatherController" type="AnimationPlayer" parent="Audio/Effects"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_gmkfr")
+}
+playback_default_blend_time = 2.0
+
+[node name="PouringWater" type="AudioStreamPlayer2D" parent="Audio/Effects"]
+position = Vector2(960, 540)
+stream = ExtResource("5_dgfqt")
+max_polyphony = 12
+area_mask = 0
+
+[node name="Weather" type="AudioStreamPlayer2D" parent="Audio/Effects"]
+position = Vector2(960, 540)
+stream = ExtResource("6_fx1sv")
+max_polyphony = 12
+area_mask = 0
 
 [node name="FadeTimer" type="Timer" parent="Audio"]
-wait_time = 0.5
+wait_time = 2.0
 one_shot = true
 
-[connection signal="resetButtons" from="." to="." method="ResetButtons"]
+[node name="WeatherTimer" type="Timer" parent="Audio"]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="enoughChoices" from="." to="UI" method="ShowBrewButton"]
+[connection signal="fastTimer" from="." to="UI" method="FastTimer"]
 [connection signal="revealDatsura" from="." to="UI" method="RevealDatsura"]
 [connection signal="activation" from="UI" to="." method="ActivationIngredientSelected"]
 [connection signal="brewTea" from="UI" to="." method="BrewTea"]
 [connection signal="datsura" from="UI" to="." method="DatsuraSelected"]
-[connection signal="dreamScene" from="UI" to="." method="DreamScene"]
-[connection signal="menuScene" from="UI" to="." method="MenuScene"]
 [connection signal="negation" from="UI" to="." method="NegationIngredientSelected"]
 [connection signal="neutral" from="UI" to="." method="NeutralIngredientSelected"]
 [connection signal="proceed" from="UI" to="." method="Proceed"]
 [connection signal="quitGame" from="UI" to="." method="QuitGame"]
 [connection signal="returnToMenu" from="UI" to="." method="ReturnToMenu"]
 [connection signal="startGame" from="UI" to="." method="StartGame"]
-[connection signal="teaScene" from="UI" to="." method="TeaScene"]
-[connection signal="finished" from="Audio/TeaTheme" to="." method="MusicFinished"]
-[connection signal="finished" from="Audio/DreamTheme" to="." method="MusicFinished"]
+[connection signal="finished" from="Audio/Music/TeaTheme" to="." method="MusicFinished"]
+[connection signal="finished" from="Audio/Music/DreamTheme" to="." method="MusicFinished"]
+[connection signal="finished" from="Audio/Effects/PouringWater" to="." method="WaterPourFinished"]
+[connection signal="finished" from="Audio/Effects/Weather" to="." method="WeatherStopped"]
 [connection signal="timeout" from="Audio/FadeTimer" to="." method="FadeTimerEnd"]
+[connection signal="timeout" from="Audio/WeatherTimer" to="." method="WeatherTimerFinish"]

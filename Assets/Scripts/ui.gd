@@ -18,11 +18,11 @@ signal brewTea
 signal startGame
 signal quitGame
 signal returnToMenu
-signal teaScene
-signal dreamScene
-signal menuScene
 
 var inScene = ""
+var fastTimer = false
+var revealDatsura = false
+var gameOver = false
 
 # INGREDIENT SIGNAL FUNCTIONS
 func Activation01():
@@ -56,27 +56,26 @@ func Neutral01():
 func Neutral02():
 	$TeaScene/IngredientButtons/Neutral02.disabled = true
 	neutral.emit()
-	
-func Datsura():
-	$TeaScene/IngredientButtons/Datsura.disabled = true
-	datsura.emit()
 
 func Lavender():
 	$TeaScene/IngredientButtons/Lavender.disabled = true
-	datsura.emit()
+	neutral.emit()
 
 func Milk():
 	$TeaScene/IngredientButtons/Milk.disabled = true
-	datsura.emit()
+	neutral.emit()
 
 func Mint():
 	$TeaScene/IngredientButtons/Mint.disabled = true
-	datsura.emit()
+	neutral.emit()
 
 func Sugar():
 	$TeaScene/IngredientButtons/Sugar.disabled = true
+	neutral.emit()
+
+func Datsura():
+	$TeaScene/IngredientButtons/Datsura.disabled = true
 	datsura.emit()
-	
 
 # RITUAL SIGNAL FUNCTIONS
 func TeaLeavesFirePressed():
@@ -94,12 +93,18 @@ func BrewButtonPressed():
 func StartButtonPressed():
 	startGame.emit()
 func QuitButtonPressed():
-	quitGame.emit()
-func ExitButtonPressed():
 	returnToMenu.emit()
+func ExitButtonPressed():
+	quitGame.emit()
 func ContinueButtonPressed():
 	proceed.emit()
-	
+
+func GameOver():
+	gameOver = true
+	revealDatsura = false
+	$DreamScene/ContinueButton.hide()
+	$DreamScene/ContinueButton.disabled = false
+	ShowDreamScene("[p][/p][p][/p][p][center]IS THIS TRULY THE END...?[/center][/p]")
 
 # UI CONTROLLER METHODS...
 func ShowDreamMessage(text):
@@ -112,24 +117,17 @@ func ShowTeaMessage(text, instructions):
 	$TeaScene/TeaMessage.show()
 	$TeaScene/TeaMessage.TypeWriter()
 
-func ShowAlert(alert):
-	print("Alert: ", alert)
-	$TeaScene/Alert.text = "[center]" + alert + "[/center]"
-	$TeaScene/Alert.show()
-	$TeaScene/AlertTimer.start()
-
-func HideAlert():
-	$TeaScene/Alert.hide()
-
 func HideDreamScene():
 	$DreamScene/DreamBackdrop.hide()
 	$DreamScene/DreamMessage.hide()
 	$DreamScene/ContinueButton.hide()
 	
 func HideMainMenu():
-	$UIbuttons/ExitButton.show()
-	$UIbuttons/StartButton.hide()
-	$UIbuttons/QuitButton.hide()
+	$UIbuttons/QuitButton.show()
+	$MenuScene/StartButton.hide()
+	$MenuScene/ExitButton.hide()
+	$MenuScene/TITLE.hide()
+	$MenuScene/MenuBackdrop.hide()
 	
 func HideTeaScene():
 	HideIngredients()
@@ -139,23 +137,31 @@ func HideTeaScene():
 	
 func ShowDreamScene(text):
 	inScene = "dream"
-	dreamScene.emit()
 	$DreamScene/DreamBackdrop.show()
+	
+	if(fastTimer):
+		print("Fast Timer")
+		$DreamScene/ContinueTimerFast.start()
+		fastTimer = false
+	elif(not gameOver):
+		print("Regular Timer")
+		$DreamScene/ContinueTimer.start()
+	else:
+		gameOver = false
+	
 	ShowDreamMessage(text)
-	$DreamScene/ContinueTimer.start()
 
 func ShowMainMenu():
 	inScene = "menu"
-	menuScene.emit()
-	$UIbuttons/ExitButton.hide()
-	$UIbuttons/StartButton.show()
-	$UIbuttons/QuitButton.show()
+	$UIbuttons/QuitButton.hide()
+	$MenuScene/StartButton.show()
+	$MenuScene/ExitButton.show()
+	$MenuScene/TITLE.show()
+	$MenuScene/MenuBackdrop.show()
 	
 func ShowTeaScene(text, instructions):
 	inScene = "tea"
-	teaScene.emit()
 	$TeaScene/TeaBackdrop.show()
-	$TeaScene/BrewButtonTimer.start()
 	InitializeIngredients()
 	ShowTeaMessage(text, instructions)
 
@@ -172,13 +178,13 @@ func HideIngredients():
 	$TeaScene/IngredientButtons/Milk.hide()
 	$TeaScene/IngredientButtons/Mint.hide()
 	$TeaScene/IngredientButtons/Sugar.hide()
+	$TeaScene/IngredientButtons/Datsura.hide()
 
 func InitializeIngredients():
 	var activeIngredients = ["Baobab", "Blackthorn", "Irrwurz", "Lotus", "Sanjivani"]
 	var otherIngredients = ["Colocasia", "Ginseng", "Osage", "Raskovnik"]
 	var negateIngredients = ["Basil", "Cycad"]
-	var activeLocations = [[1383, 74], [1497, 74], [1677, 74], [1796, 74], [915, 223], [1089, 223], [1207, 223]]
-	var otherLocations = [[1383, 223], [1497, 223], [1677, 223], [1796, 223]]
+	var locations = [[1383, 74], [1497, 74], [1677, 74], [1796, 74], [915, 223], [1089, 223], [1207, 223], [1383, 223], [1497, 223], [1677, 223], [1796, 223]]
 	var activeChoices = []
 	var negateChoices = []
 	var otherChoices = []
@@ -190,24 +196,24 @@ func InitializeIngredients():
 		# Randomly determine ingredient.
 		RNG = RandomNumberGenerator.new()
 		var iLength = len(activeIngredients) - 1
-		var locLength = len(activeLocations) - 1
+		var locLength = len(locations) - 1
 		var randomNumbers = [RNG.randi_range(0, iLength), RNG.randi_range(0, locLength)]
 		
 		# Add new ingredient to list of chosen ingredients.
-		activeChoices.append([activeIngredients[randomNumbers[0]], activeLocations[randomNumbers[1]]])
+		activeChoices.append([activeIngredients[randomNumbers[0]], locations[randomNumbers[1]]])
 		
 		# Delete new ingredient from original list, to prevent repeated selection.
 		activeIngredients.pop_at(randomNumbers[0])
-		activeLocations.pop_at(randomNumbers[1])
+		locations.pop_at(randomNumbers[1])
 		
-		print(activeChoices[index][0], "Chosen at location: ", activeChoices[index][1])
+		print(activeChoices[index][0], " Chosen at location: ", activeChoices[index][1])
 	
 	# Select 2 OTHER Ingredients...
 	for index in 2:
 		# Randomly determine ingredient.
 		RNG = RandomNumberGenerator.new()
 		var iLength = len(otherIngredients) + len(negateIngredients) - 1
-		var locLength = len(otherLocations) - 1
+		var locLength = len(locations) - 1
 		var randomNumbers = [RNG.randi_range(0,iLength), RNG.randi_range(0,locLength)]
 		
 		# Determine whether new ingredient is a negation ingredient.
@@ -215,24 +221,24 @@ func InitializeIngredients():
 			# Add new ingredient to list of chosen ingredients.
 			randomNumbers[0] -= len(otherIngredients)
 			negateChosen[index] = true
-			negateChoices.append([negateIngredients[randomNumbers[0]], otherLocations[randomNumbers[1]]])
+			negateChoices.append([negateIngredients[randomNumbers[0]], locations[randomNumbers[1]]])
 			otherChoices.append(["",[0,0]])
 			
 			# Delete new ingredient from original list, to prevent repeated selection.
 			negateIngredients.pop_at(randomNumbers[0])
-			otherLocations.pop_at(randomNumbers[1])
+			locations.pop_at(randomNumbers[1])
 			
-			print(negateChoices[index][0], "Chosen at location: ", negateChoices[index][1])
+			print(negateChoices[index][0], " Chosen at location: ", negateChoices[index][1])
 		else:
 			# Add new ingredient to list of chosen ingredients.
 			negateChoices.append(["",[0,0]])
-			otherChoices.append([otherIngredients[randomNumbers[0]], otherLocations[randomNumbers[1]]])
+			otherChoices.append([otherIngredients[randomNumbers[0]], locations[randomNumbers[1]]])
 			
 			# Delete new ingredient from original list, to prevent repeated selection.
 			otherIngredients.pop_at(randomNumbers[0])
-			otherLocations.pop_at(randomNumbers[1])
+			locations.pop_at(randomNumbers[1])
 			
-			print(otherChoices[index][0], "Chosen at location: ", otherChoices[index][1])
+			print(otherChoices[index][0], " Chosen at location: ", otherChoices[index][1])
 			
 	
 	# Configure the ACTIVATION Ingredients...
@@ -253,10 +259,19 @@ func InitializeIngredients():
 		SetupButton($TeaScene/IngredientButtons/Neutral02, otherChoices[1])
 	
 	# Configure the NEUTRAL ingredients...
+	$TeaScene/IngredientButtons/Lavender.disabled = false
 	$TeaScene/IngredientButtons/Lavender.show()
+	$TeaScene/IngredientButtons/Milk.disabled = false
 	$TeaScene/IngredientButtons/Milk.show()
+	$TeaScene/IngredientButtons/Mint.disabled = false
 	$TeaScene/IngredientButtons/Mint.show()
+	$TeaScene/IngredientButtons/Sugar.disabled = false
 	$TeaScene/IngredientButtons/Sugar.show()
+	
+	if (revealDatsura):
+		$TeaScene/IngredientButtons/Datsura.disabled = false
+		$TeaScene/IngredientButtons/Datsura.show()
+	
 
 func SetupButton(button, list):
 	match(list[0]):
@@ -287,6 +302,7 @@ func SetupButton(button, list):
 	
 	button.position.x = list[1][0]
 	button.position.y = list[1][1]
+	button.disabled = false
 	button.show()
 
 func ContinueGame():
@@ -298,5 +314,7 @@ func ShowBrewButton():
 		$TeaScene/BrewButton.show()
 
 func RevealDatsura():
-	if(inScene == "tea"):
-		$TeaScene/IngredientButtons/Datsura.show()
+	revealDatsura = true
+
+func FastTimer():
+	fastTimer = true
