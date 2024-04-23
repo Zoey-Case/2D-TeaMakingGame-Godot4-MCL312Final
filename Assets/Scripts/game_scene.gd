@@ -1,11 +1,5 @@
 extends Node2D
 
-## TEXT STUFF
-var dreamText = ["[p]You rest peacefully in your bed all night...[/p]", "[p]A dark forest surrounds you when you open your eyes.[/p] [p]A flash of light catches your eye.[/p] [p]A glowing fox dashes through the trees ahead. You follow.[/p] [p]An eternity later, the fox stops running. So do you.[/p] [p]The fox looks up through the branches and leaves for a moment, glows brighter and vanishes.[/p] [p]You walk to the same spot, and look up.[/p] [p]One star glows in the sky above.[/p]", "[p]A dark forest surrounds you when you open your eyes.[/p] [p]A flash of light catches your eye.[/p] [p]A glowing fox dashes through the trees ahead. You follow.[/p] [p]The fox enters a clearing. You halt at the treeline to watch.[/p] [p]The fox spirit effortlessly climbs to the top of a giant rock in the middle of the clearing.[/p] [p]The fox looks up at the sky, and then vanishes.[/p] [p]You enter the clearing and circle the rock, trying to climb up, but you can't seem to find a way.[/p] [p]Frustrated, you give up and gaze towards the sky where you see two stars glowing brightly above you.[/p]", "[p]A rock partially obstructs your view when you open your eyes.[/p] [p]You're in the middle of a clearing.[/p] [p]On top of the rock sits a glowing fox. It's looking at you.[/p] [p]By the fox’s glow, you can see crevices in the rock.[/p] [p]You stand, walk to the rock, and climb.[/p] [p]When you’re finally standing on top of the rock, the fox has vanished, but you can still see somehow.[/p] [p]You look up to the sky above. Three huge stars glow back at you.[/p]", "[p]You awaken in the clearing, no rock to be seen, the night sky glowing above.[/p] [p]As you stand, the glowing fox approaches you, and transforms into a person wearing a tunic, still glowing softly from within.[/p] [p]The glow-person smiles.[/p] [p]“I am Inari. You are truly gifted in the craft of tea. Take this. It will bless you as you have blessed me.”[/p] [p]A new flower sits in your hand, white and cup-shaped.[/p]", "[p]You awaken in the clearing. Again.[/p] [p]You stand, looking around for the Inari-fox.[/p] [p]A hole opens in the ground in front of you. You jump back.[/p] [p]A woman climbs from the hole. She seems to suck the light from the stars above.[/p] [p]You hear her voice hissing in your head.[/p] [p]“I am Izanami, and you...you are Inari's chosen. You should not be here.”[/p]"]
-var teaText = ["[p]You can't seem to recall having any dreams last night...[/p] [p]Maybe you should try different ingredients.[/p]", "[p]Recently, you've been having bizarre dreams, but you struggle to recall them after.[/p] [p]Try brewing some tea to focus your mind, so you can remember.[/p]", "[p]You shake awake. What in the world?[/p] [p]You’ve never dreamed so clearly...[/p] [p]and it seemed like that fox knew you.[/p] [p]And the forest...It’s like you’ve been there before.[/p] [p]Was it because of the tea you drank?[/p]", "[p]You open your eyes slowly. What's going on?!?[/p] [p]Not only were you dreaming of the same place, but that fox was there again?!?[/p] [p]What could it all mean?[/p] [p]You need some relaxing tea to clear your head.[/p] [p]Maybe you'll have another dream tonight.[/p]", "[p]You wake peacefully, slowly.[/p] [p]You feel like you’re almost to the end of a long journey.[/p] [p]On the edge of a precipice...But you aren't scared.[/p] [p]You know what you need to do...[/p]", "[p]Inari...? And they gave you some kind of special flower for your tea...[/p] [p]That can't have really happened, right?[/p] [p]Only...The flower is RIGHT THERE...[/p] [p]Maybe you should use it...[/p]"]
-var instructions = "(Select ingredients to brew.)"
-## TEXT STUFF
-
 signal revealDatsura
 signal fastTimer
 signal enoughChoices
@@ -15,6 +9,11 @@ signal enoughChoices
 var CHOICE_REQ = requiredChoiceNum
 var sceneOptions = []
 var choiceTracker = []
+var instructions = "(Select ingredients to brew.)"
+#var dreamText = ["[p]You rest peacefully in your bed all night...[/p]", "[p]A dark forest surrounds you when you open your eyes.[/p] [p]A flash of light catches your eye.[/p] [p]A glowing fox dashes through the trees ahead. You follow.[/p] [p]An eternity later, the fox stops running. So do you.[/p] [p]The fox looks up through the branches and leaves for a moment, glows brighter and vanishes.[/p] [p]You walk to the same spot, and look up.[/p] [p]One star glows in the sky above.[/p]", "[p]A dark forest surrounds you when you open your eyes.[/p] [p]A flash of light catches your eye.[/p] [p]A glowing fox dashes through the trees ahead. You follow.[/p] [p]The fox enters a clearing. You halt at the treeline to watch.[/p] [p]The fox spirit effortlessly climbs to the top of a giant rock in the middle of the clearing.[/p] [p]The fox looks up at the sky, and then vanishes.[/p] [p]You enter the clearing and circle the rock, trying to climb up, but you can't seem to find a way.[/p] [p]Frustrated, you give up and gaze towards the sky where you see two stars glowing brightly above you.[/p]","[p]A rock partially obstructs your view when you open your eyes.[/p] [p]You're in the middle of a clearing.[/p] [p]On top of the rock sits a glowing fox. It's looking at you.[/p] [p]By the fox’s glow, you can see crevices in the rock.[/p] [p]You stand, walk to the rock, and climb.[/p] [p]When you’re finally standing on top of the rock, the fox has vanished, but you can still see somehow.[/p] [p]You look up to the sky above. Three huge stars glow back at you.[/p]","[p]You awaken in the clearing, no rock to be seen, the night sky glowing above.[/p] [p]As you stand, the glowing fox approaches you, and transforms into a person wearing a tunic, still glowing softly from within.[/p] [p]The glow-person smiles.[/p] [p]“I am Inari. You are truly gifted in the craft of tea. Take this. It will bless you as you have blessed me.”[/p] [p]A new flower sits in your hand, white and cup-shaped.[/p]","[p]You awaken in the clearing. Again.[/p] [p]You stand, looking around for the Inari-fox.[/p] [p]A hole opens in the ground in front of you. You jump back.[/p] [p]A woman climbs from the hole. She seems to suck the light from the stars above.[/p] [p]You hear her voice hissing in your head.[/p] [p]“I am Izanami, and you...you are Inari's chosen. You should not be here.”[/p]"]
+#var teaText = ["[p]You can't seem to recall having any dreams last night...[/p] [p]Maybe you should try different ingredients.[/p]","[p]Recently, you've been having bizarre dreams, but you struggle to recall them after.[/p] [p]Try brewing some tea to focus your mind, so you can remember.[/p]","[p]You shake awake. What in the world?[/p] [p]You’ve never dreamed so clearly...[/p] [p]and it seemed like that fox knew you.[/p] [p]And the forest...It’s as if you’ve been there before.[/p] [p]Was it because of the tea you drank?[/p]","[p]You open your eyes slowly. What's going on?[/p] [p]Not only were you dreaming of the same place, but that fox was there again?[/p] [p]What could it all mean?[/p] [p]You need some relaxing tea to clear your head.[/p] [p]Maybe you'll have another dream tonight.[/p]","[p]You wake peacefully, slowly.[/p] [p]You feel as though you’re almost to the end of a long journey.[/p] [p]On the edge of a precipice...But you aren't scared.[/p] [p]You know what to do...[/p]","[p]Inari...? And they gave you some kind of special flower for your tea...[/p] [p]That can't have really happened, right?[/p] [p]Only...The flower is RIGHT THERE.[/p] [p]Maybe you should use it...[/p]"]
+var dreamText = []
+var teaText = []
 var datsuraGiven = false
 var datsuraSelected = false
 var choiceCount = 0
@@ -31,8 +30,8 @@ var pauseTeaTrack
 ###########################
 
 func _ready():
-	#teaText = GetTextFromFile("TeaText")
-	#dreamText = GetTextFromFile("DreamText")
+	teaText = GetTextFromFile("TeaText")
+	dreamText = GetTextFromFile("DreamText")
 	ResetGame()
 	$UI.HideTeaScene()
 	$UI.HideDreamScene()
@@ -40,14 +39,14 @@ func _ready():
 	WeatherOn()
 	
 
-#func GetTextFromFile(filename):
-	##var textFile = ResourceLoader.load("res://Assets/TextFiles/" + filename + ".txt")
-	#var file = FileAccess.open(ResourceLoader("res://Assets/TextFiles/" + filename + ".txt"), FileAccess.READ)
-	#var data = []
-	#while(not textFile.eof_reached()):
-		#data.append(textFile.get_line())
-	#
-	#return data
+func GetTextFromFile(filename):
+	
+	var file = FileAccess.open("res://Assets/TextFiles/" + filename + ".txt", FileAccess.READ)
+	var data = []
+	while(not file.eof_reached()):
+		data.append(file.get_line())
+	
+	return data
 
 func WeatherOn():
 	if(not $Audio/Effects/Weather.playing):
